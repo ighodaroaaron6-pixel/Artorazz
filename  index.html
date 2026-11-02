@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Artoraz – Buy and sell original artwork</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f6f3;--surf:#fff;--ink:#15171c;--mute:#6a6e78;--line:#dcdcd6;--acc:#2a3fd4;--accink:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101216;--surf:#181b21;--ink:#ecece8;--mute:#9a9ea8;--line:#2a2e36;--acc:#8d9bff;--accink:#101216}}
+:root[data-theme="dark"]{--bg:#101216;--surf:#181b21;--ink:#ecece8;--mute:#9a9ea8;--line:#2a2e36;--acc:#8d9bff;--accink:#101216}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.55 'Instrument Sans',system-ui,sans-serif;transition:background .3s,color .3s}
+h1,h2,h3,.logo{font-family:'Newsreader',Georgia,serif;font-weight:400;letter-spacing:-.01em}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+header{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:20px;padding:14px 5vw}
+.logo{font-size:28px;margin-right:auto}
+nav{display:flex;gap:22px;align-items:center}
+nav a{color:var(--mute)}nav a:hover{color:var(--ink)}
+.btn{border:1px solid var(--ink);background:none;padding:9px 18px;border-radius:99px;cursor:pointer;transition:.2s}
+.btn:hover{background:var(--ink);color:var(--bg)}
+.btn.p{background:var(--acc);border-color:var(--acc);color:var(--accink)}
+.btn.p:hover{opacity:.88;background:var(--acc);color:var(--accink)}
+.ic{width:40px;height:40px;padding:0;border-radius:50%;display:grid;place-items:center}
+#menu{display:none}
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:5vw;align-items:center;padding:9vh 5vw 7vh}
+.hero h1{font-size:clamp(40px,6.4vw,84px);line-height:1.02}
+.hero p{color:var(--mute);max-width:46ch;margin:22px 0 28px;font-size:18px}
+.hero .row{display:flex;gap:12px;flex-wrap:wrap}
+.frame{background:var(--surf);padding:clamp(14px,2.4vw,30px);border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(0,0,0,.35);transform:rotate(1.5deg)}
+.frame svg{display:block;width:100%;height:auto}
+.frame small{display:block;margin-top:12px;color:var(--mute);font-size:13px}
+.strip{display:flex;gap:6vw;flex-wrap:wrap;padding:22px 5vw;border-block:1px solid var(--line);color:var(--mute);font-size:15px}
+.strip b{color:var(--ink);font-weight:500}
+section{padding:8vh 5vw}
+section h2{font-size:clamp(30px,4vw,48px);margin-bottom:6px}
+.sub{color:var(--mute);margin-bottom:28px}
+.tools{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:12px;margin-bottom:14px}
+.tools input,.tools select{width:100%;background:var(--surf);border:1px solid var(--line);border-radius:10px;padding:11px 14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+.chip{border:1px solid var(--line);background:none;border-radius:99px;padding:6px 14px;cursor:pointer;color:var(--mute)}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:28px 22px}
+.card{cursor:pointer;background:none;border:0;text-align:left;padding:0;display:block;width:100%}
+.card .im{background:var(--surf);border:1px solid var(--line);padding:12px;transition:transform .25s,box-shadow .25s}
+.card:hover .im{transform:translateY(-4px);box-shadow:0 18px 30px -20px rgba(0,0,0,.4)}
+.card svg{display:block;width:100%;height:auto}
+.card h3{font-size:21px;margin-top:12px;line-height:1.2}
+.card .m{color:var(--mute);font-size:14px;display:flex;justify-content:space-between;gap:8px;margin-top:3px}
+.tag{border:1px solid var(--line);border-radius:99px;padding:0 9px;font-size:12px;white-space:nowrap}
+.sk{aspect-ratio:4/5;border-radius:4px;background:linear-gradient(90deg,var(--line),var(--surf),var(--line));background-size:200% 100%;animation:sh 1.2s infinite}
+@keyframes sh{to{background-position:-200% 0}}
+.empty{grid-column:1/-1;padding:50px 0;color:var(--mute)}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:34px;border-top:1px solid var(--line);padding-top:30px}
+.how h3{font-size:24px;margin-bottom:6px}.how p{color:var(--mute)}
+footer{border-top:1px solid var(--line);padding:34px 5vw;display:flex;flex-wrap:wrap;gap:18px 30px;color:var(--mute);font-size:14px}
+footer .logo{color:var(--ink);font-size:22px;margin-right:auto}
+dialog{border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:0;width:min(900px,94vw);max-height:92vh;overflow:auto}
+dialog::backdrop{background:rgba(10,10,14,.6)}
+.det{display:grid;grid-template-columns:1.1fr 1fr;gap:30px;padding:28px}
+.det h2{font-size:34px}
+.det dl{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;margin:18px 0;color:var(--mute);font-size:15px}
+.det dd{color:var(--ink)}
+.price{font:400 34px 'Newsreader',serif;margin:6px 0}
+.note{font-size:13px;color:var(--mute);margin:10px 0 18px}
+.x{float:right;margin:12px 12px 0}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,30px);background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:99px;opacity:0;pointer-events:none;transition:.3s;z-index:50}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+@media(max-width:820px){
+ #menu{display:grid}
+ nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--bg);flex-direction:column;align-items:flex-start;padding:18px 5vw;border-bottom:1px solid var(--line)}
+ nav.open{display:flex}
+ .hero,.det{grid-template-columns:1fr}.frame{transform:none}
+ .tools{grid-template-columns:1fr 1fr}.tools input{grid-column:1/-1}
+}
+.frm{display:grid;gap:10px;margin-top:14px}.frm input{width:100%;background:var(--surf);border:1px solid var(--line);border-radius:10px;padding:11px 14px}.frm .chips{margin:0}.pol .chips{margin:14px 0 0}
+.pol{padding:30px 30px 34px;max-width:70ch}.pol h2{font-size:36px;margin-bottom:4px}.pol h3{font-size:20px;margin:22px 0 4px}.pol p,.pol li{color:var(--mute);margin-bottom:6px}.pol ul{padding-left:20px}.pol .d{font-size:13px;margin-bottom:14px}.pol .w{border-left:3px solid var(--acc);padding:6px 12px;margin-top:24px;font-size:14px;color:var(--ink)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+ <a class="logo" href="#top">Artoraz</a>
+ <nav id="nav"><a href="#gallery">Gallery</a><a href="#how">How it works</a><a href="#about">About</a><a href="#sell">Sell art</a><a href="#" class="btn" id="auth">Sign in</a></nav>
+ <button class="btn ic" id="theme" aria-label="Switch theme">◐</button>
+ <button class="btn ic" id="menu" aria-label="Open menu" aria-expanded="false">☰</button>
+</header>
+<main id="top">
+<div class="hero">
+ <div>
+  <h1>Original art, bought and sold directly.</h1>
+  <p>Artoraz is a marketplace for digital and physical artwork. Browse approved pieces, pay in crypto, and keep what you buy.</p>
+  <div class="row"><a class="btn p" href="#gallery">Browse artwork</a><a class="btn" href="#sell">Start selling</a></div>
+ </div>
+ <div class="frame" id="heroArt"></div>
+</div>
+<div class="strip"><span><b>0%</b> buyer commission</span><span><b>90%</b> of every sale goes to the artist</span><span><b>Digital and physical</b> works</span></div>
+
+<section id="gallery">
+ <h2>Gallery</h2><p class="sub">Every piece is reviewed before it goes live.</p>
+ <div class="tools">
+  <input id="q" type="search" placeholder="Search by title, artist or store" aria-label="Search artwork">
+  <select id="type" aria-label="Artwork type"><option value="">Digital and physical</option><option>Digital</option><option>Physical</option></select>
+  <select id="price" aria-label="Price range"><option value="">Any price</option><option value="0-100">Under $100</option><option value="100-300">$100 to $300</option><option value="300-9999">Over $300</option></select>
+  <select id="sort" aria-label="Sort"><option value="">Newest</option><option value="lo">Price: low to high</option><option value="hi">Price: high to low</option></select>
+ </div>
+ <div class="chips" id="chips"></div>
+ <div class="grid" id="grid"></div>
+</section>
+
+<section id="how"><h2>How it works</h2><p class="sub">Simple for buyers, fair for artists.</p>
+ <div class="how">
+  <div><h3>Buy</h3><p>Pick a piece, see the full price and any network fee before you pay, then download it or track delivery.</p></div>
+  <div><h3>Sell</h3><p>Pay the listing fee once per artwork, upload your work, and it goes live after review.</p></div>
+  <div><h3>Get paid</h3><p>You keep 90% of the sale price. Request a payout once you have $10 or more.</p></div>
+ </div>
+</section>
+<section id="about"><h2>About Artoraz</h2><p class="sub" style="max-width:60ch">Artoraz does one thing: connect artists with people who want to own their work. No feeds, no followers, just art and fair terms.</p></section>
+<section id="sell"><h2>Sell your art</h2><p class="sub">Create a seller account to list digital or physical pieces.</p><button class="btn p" onclick="want='seller';mode='up';authUI();$('#dlg').showModal()">Create seller account</button></section>
+</main>
+<footer><span class="logo">Artoraz</span><a href="#terms" data-p="terms">Terms</a><a href="#privacy" data-p="privacy">Privacy</a><a href="#refunds" data-p="refunds">Refund policy</a><a href="#copyright" data-p="copyright">Copyright</a><a href="#contact" data-p="contact">Contact</a></footer>
+
+<dialog id="dlg"><button class="btn ic x" id="close" aria-label="Close">✕</button><div class="det" id="det"></div></dialog>
+<div id="toast" role="status"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+let CATS=['Painting','Illustration','Photography','Sculpture','Abstract','Digital'];
+let A=[
+['Harmattan Light','Amaka Obi','Painting','Physical',240],['Signal Bloom','Studio Neon','Digital','Digital',45],
+['Red Clay Study','Tunde Bello','Sculpture','Physical',410],['Night Market','Ife Adeyemi','Illustration','Digital',60],
+['Tidal Grid','Kaya Moreau','Abstract','Digital',85],['Quiet Harbour','Lena Voss','Photography','Physical',180],
+['Ochre Hours','Amaka Obi','Painting','Physical',320],['Paper Orbit','Studio Neon','Illustration','Digital',30],
+['Low Sun, Lagos','Ife Adeyemi','Photography','Digital',55],['Fold No. 4','Kaya Moreau','Abstract','Physical',275],
+['Glasswork','Lena Voss','Sculpture','Physical',520],['Static Garden','Tunde Bello','Digital','Digital',70]
+].map((a,i)=>({id:i,title:a[0],artist:a[1],cat:a[2],type:a[3],price:a[4]}));
+function rng(s){return()=>(s=Math.imul(s^s>>>15,2246822507)+1013904223|0,((s>>>0)%1000)/1000)}
+function art(id,w=400,h=500){
+ const r=rng(id*7919+13),P=[['#e8d5b7','#c2553a','#27333f','#f3efe6'],['#0f1f4b','#ff7a59','#f4c95d','#e9f1ff'],['#183d3d','#e0a458','#f2e9dc','#a3c4bc'],['#2b2d42','#ef476f','#ffd166','#8ecae6'],['#f1e3d3','#3a5a40','#bc6c25','#dda15e']][id%5];
+ let s=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Artwork preview"><rect width="${w}" height="${h}" fill="${P[0]}"/>`;
+ for(let i=0;i<5;i++){const c=P[1+i%3],x=r()*w,y=r()*h,k=40+r()*140,t=id%3;
+  s+=t==0?`<circle cx="${x}" cy="${y}" r="${k}" fill="${c}" opacity=".85"/>`:t==1?`<rect x="${x-k/2}" y="${y-k}" width="${k}" height="${k*2}" fill="${c}" opacity=".85" transform="rotate(${r()*60-30} ${x} ${y})"/>`:`<path d="M${x-k} ${y+k} Q${x} ${y-k*1.6} ${x+k} ${y+k}Z" fill="${c}" opacity=".85"/>`}
+ return s+`<rect x="0" y="${h*.78}" width="${w}" height="${h*.22}" fill="${P[3]}" opacity=".35"/></svg>`}
+const st={cat:'',q:''};
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2400)}
+function chips(){$('#chips').innerHTML=['All',...CATS].map(c=>`<button class="chip" aria-pressed="${(st.cat||'All')==c}" data-c="${c}">${c}</button>`).join('')}
+function render(){
+ const q=$('#q').value.toLowerCase().trim(),ty=$('#type').value,pr=$('#price').value,so=$('#sort').value;
+ let l=A.filter(a=>(!st.cat||a.cat==st.cat)&&(!ty||a.type==ty)&&(!q||(a.title+a.artist).toLowerCase().includes(q)));
+ if(pr){const[lo,hi]=pr.split('-').map(Number);l=l.filter(a=>a.price>=lo&&a.price<hi)}
+ if(so)l.sort((a,b)=>so=='lo'?a.price-b.price:b.price-a.price);
+ $('#grid').innerHTML=l.length?l.map(a=>`<button class="card" data-id="${a.id}"><div class="im">${imgOf(a)}</div><h3>${a.title}</h3><div class="m"><span>${a.artist}</span><span>$${a.price}</span></div><div class="m"><span class="tag">${a.type}</span><span>${a.cat}</span></div></button>`).join(''):'<p class="empty">No artwork matches. Clear a filter or try another search.</p>'}
+function open(id){const a=A.find(x=>x.id==id);
+ $('#det').innerHTML=`<div class="im" style="background:var(--surf);border:1px solid var(--line);padding:12px;align-self:start">${imgOf(a)}</div><div><h2>${a.title}</h2><p style="color:var(--mute)">by ${a.artist}</p><div class="price">$${a.price}</div>
+ <dl><dt>Type</dt><dd>${a.type}</dd><dt>Category</dt><dd>${a.cat}</dd><dt>Delivery</dt><dd>${a.type=='Digital'?'Secure download after payment is confirmed':'Shipped by the seller, with tracking'}</dd><dt>Buyer commission</dt><dd>$0</dd></dl>
+ <p class="note">Any network or payment fee is shown separately at checkout before you pay.</p><button class="btn p" onclick="toast('Checkout arrives in Phase 6')">Buy this artwork</button></div>`;
+ $('#dlg').showModal()}
+$('#chips').onclick=e=>{const c=e.target.dataset.c;if(!c)return;st.cat=c=='All'?'':c;chips();render()};
+['q','type','price','sort'].forEach(i=>$('#'+i).addEventListener('input',render));
+$('#grid').onclick=e=>{const c=e.target.closest('.card');if(c)open(c.dataset.id)};
+$('#close').onclick=()=>$('#dlg').close();
+$('#dlg').onclick=e=>{if(e.target.id=='dlg')e.target.close()};
+$('#menu').onclick=()=>{const o=$('#nav').classList.toggle('open');$('#menu').setAttribute('aria-expanded',o)};
+$('#nav').onclick=e=>{if(e.target.tagName=='A')$('#nav').classList.remove('open')};
+$('#theme').onclick=()=>{const d=document.documentElement,dark=d.dataset.theme?d.dataset.theme=='dark':matchMedia('(prefers-color-scheme:dark)').matches,n=dark?'light':'dark';d.dataset.theme=n;try{localStorage.setItem('artoraz-theme',n)}catch(e){}};
+const S=(a,b)=>`<h3>${a}</h3>${b}`,L=a=>'<ul>'+a.map(x=>`<li>${x}</li>`).join('')+'</ul>';
+const POL={
+terms:['Terms and conditions',[S('1. About Artoraz','<p>Artoraz is a marketplace where sellers list digital and physical artwork and buyers purchase it. Artoraz is not the seller of listed works.</p>'),S('2. Accounts','<p>You choose a buyer or seller account at registration. You must give accurate details and keep your password private. We may suspend accounts that break these terms.</p>'),S('3. Seller listing fee','<p>Sellers pay a listing fee per artwork, currently 0.017 ETH unless changed by Artoraz or set individually for you. The amount is fixed when your payment request is created. Payment approval and artwork approval are separate steps, and a rejected artwork does not need a second fee for the same submission.</p>'),S('4. Commission and fees','<p>Artoraz keeps 10% of the artwork price. Sellers receive 90%. Buyers pay no commission. Network or payment-processing fees are shown separately at checkout before you pay.</p>'),S('5. Payments','<p>Payments are made in cryptocurrency through supported providers. An order is confirmed only after payment is verified by our servers, not by a browser redirect. Exchange-rate quotes are locked for 10 minutes.</p>'),S('6. Payouts','<p>Sellers can request a payout once available earnings reach $10 USD-equivalent. Payouts are reviewed and sent manually. Never share a private key or recovery phrase with anyone, including Artoraz.</p>'),S('7. Seller responsibilities','<p>You must own the artwork or have permission to sell it, describe it accurately, and deliver it as listed.</p>'),S('8. Changes','<p>We may update these terms. Continued use after an update means you accept it.</p>')]],
+privacy:['Privacy policy',[S('What we collect','<p>Account details (name, email, seller store name and contact information), wallet addresses you give for payouts, order and payment records, shipping details for physical orders, and download activity for digital purchases.</p>'),S('Why we use it','<p>To run your account, verify payments, deliver artwork, process payouts and refunds, send notifications, and prevent fraud.</p>'),S('Who sees it','<p>Sellers see the shipping details needed to fulfil a physical order. Payment providers process payment data. Artoraz administrators can view account and payment records needed to operate the marketplace.</p>'),S('Security','<p>Secret keys stay on the server, access is restricted by role, and financial actions are logged. We never ask for private keys or recovery phrases.</p>'),S('Your rights','<p>You can ask to access, correct or delete your personal data, subject to records we must keep for payments and disputes.</p>'),S('Cookies and storage','<p>We store your theme choice and login session in your browser.</p>')]],
+refunds:['Refund policy',[S('When you can ask','<p>You can request a refund within 1 week of purchase if the seller cannot deliver, the artwork was not delivered, the wrong item arrived, or another issue covered by this policy applies.</p>'),S('How it works',L(['Submit a request within 1 week of purchase, with your reason.','An administrator reviews it and approves or rejects it.','You are notified of the decision.','Approved refunds go back through the original payment provider where possible.'])),S('What you get back','<p>Where the provider allows, the full amount you paid, including any transaction fee charged to you. Blockchain network fees already spent may not be recoverable. Artoraz reverses its 10% commission on refunded sales.</p>'),S('Digital artwork','<p>Digital files cannot be returned once downloaded, so refunds apply mainly to failed or incorrect delivery.</p>'),S('Deadline and evidence','<p>Request a refund within 1 week (7 days) of your purchase. Requests after that are not accepted. The reason you give in your request is the evidence we review, so explain clearly what went wrong.</p>')]],
+copyright:['Copyright and intellectual property',[S('Your work stays yours','<p>Sellers keep ownership of their artwork. By listing, you give Artoraz permission to display it to promote and sell it.</p>'),S('Seller confirmation','<p>Every seller confirms they own the work or have permission to sell it. Listing work you do not have rights to leads to removal and possible account suspension.</p>'),S('What buyers receive','<p>A purchase gives you the artwork file or physical piece and personal use, unless the listing states other rights. It does not transfer copyright.</p>'),S('Report infringement','<p>If you believe a listing infringes your rights, send us: your name and contact details, the artwork link, proof you own the rights, and a statement that your claim is made in good faith. We review each report and may remove the listing while we investigate. Sellers can respond before a final decision.</p>')]],
+contact:['Contact Artoraz',[S('Support','<p>Questions about an order, payment, payout, refund or copyright report: include your order or artwork reference so we can help faster.</p>'),S('Email','<p>[Add your support email here]</p>'),'<p class="w">A contact form arrives with the Supabase phase.</p>']]};
+function pol(k){const[t,b]=POL[k];$('#det').innerHTML=`<div class="pol"><h2>${t}</h2><p class="d">Draft, last updated 2 November 2026</p>${b.join('')}${k=='contact'?'':'<p class="w">This is a starting draft. Have a Nigerian lawyer review it, including data-protection and consumer-protection rules, before launch.</p>'}</div>`;$('#dlg').showModal()}
+document.querySelector('footer').onclick=e=>{const k=e.target.dataset.p;if(k){e.preventDefault();pol(k)}};
+try{const t=localStorage.getItem('artoraz-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}
+$('#heroArt').innerHTML=art(4,400,480)+'<small>Tidal Grid, Kaya Moreau</small>';
+const SB=supabase.createClient('https://tbcacbepmrjfwlcvamtn.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRiY2FjYmVwbXJqZndsY3ZhbXRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM2MDQ5NDgsImV4cCI6MjEwOTE4MDk0OH0.hOnStzqDXZuzHH629c8ws1xXnIY5ZwueiBhVPfy3ST0');
+let mode='in',want='buyer',me=null,F={};
+const imgOf=a=>a.preview?`<img src="${a.preview}" alt="${a.title}" style="width:100%;display:block">`:art(a.id);
+const val=i=>(($('#'+i)||{}).value||'').trim();
+function keep(){['fn','sn','ct','em'].forEach(i=>{if($('#'+i))F[i]=val(i)})}
+function authUI(){const f=i=>F[i]||'';
+ $('#det').innerHTML=`<div class="pol"><h2>${mode=='in'?'Sign in':'Create account'}</h2>
+ <div class="chips"><button class="chip" data-m="in" aria-pressed="${mode=='in'}">Sign in</button><button class="chip" data-m="up" aria-pressed="${mode=='up'}">Create account</button></div>
+ <div class="frm">${mode=='up'?`<div class="chips"><button class="chip" data-r="buyer" aria-pressed="${want=='buyer'}">I want to buy</button><button class="chip" data-r="seller" aria-pressed="${want=='seller'}">I want to sell</button></div><input id="fn" placeholder="Full name" autocomplete="name" value="${f('fn')}">${want=='seller'?`<input id="sn" placeholder="Artist or store name" value="${f('sn')}"><input id="ct" placeholder="Contact information" value="${f('ct')}">`:''}`:''}
+ <input id="em" type="email" placeholder="Email address" autocomplete="email" value="${f('em')}"><input id="pw" type="password" placeholder="Password (8+ characters)" autocomplete="${mode=='in'?'current-password':'new-password'}">
+ <p class="note" id="msg"></p><button class="btn p" id="go">${mode=='in'?'Sign in':'Create account'}</button></div></div>`}
+async function go(){const msg=$('#msg'),em=val('em'),pw=$('#pw').value;
+ const bad=t=>{msg.textContent=t;$('#go').disabled=false};
+ if(!em||pw.length<8)return bad('Enter your email and a password of at least 8 characters.');
+ if(mode=='up'&&(!val('fn')||(want=='seller'&&(!val('sn')||!val('ct')))))return bad('Fill in every field to create your account.');
+ $('#go').disabled=true;msg.textContent='Please wait…';
+ if(mode=='in'){const{error}=await SB.auth.signInWithPassword({email:em,password:pw});if(error)return bad(error.message);$('#dlg').close();toast('Signed in')}
+ else{const{data,error}=await SB.auth.signUp({email:em,password:pw,options:{emailRedirectTo:location.origin,data:{full_name:val('fn'),role:want,store_name:val('sn'),contact:val('ct')}}});
+  if(error)return bad(error.message);
+  if(data.session){$('#dlg').close();toast('Account created')}else{msg.textContent='Check your email to confirm your account, then sign in.';$('#go').disabled=false}}}
+function acct(){$('#det').innerHTML=`<div class="pol"><h2>${me.full_name||'Your account'}</h2><p>${me.role[0].toUpperCase()+me.role.slice(1)} account</p>${me.store_name?`<p>Store: ${me.store_name}</p>`:''}<p class="note">Your dashboard arrives in the next phase.</p><button class="btn" id="out">Sign out</button></div>`;$('#dlg').showModal()}
+$('#det').addEventListener('click',async e=>{const t=e.target;
+ if(t.dataset.m){keep();mode=t.dataset.m;authUI()}else if(t.dataset.r){keep();want=t.dataset.r;authUI()}
+ else if(t.id=='go')go();else if(t.id=='out'){await SB.auth.signOut();$('#dlg').close();toast('Signed out')}});
+$('#auth').onclick=e=>{e.preventDefault();if(me)acct();else{authUI();$('#dlg').showModal()}};
+SB.auth.onAuthStateChange(async(_e,ses)=>{
+ if(!ses){me=null;$('#auth').textContent='Sign in';return}
+ const{data}=await SB.from('profiles').select('role,full_name,store_name').eq('id',ses.user.id).maybeSingle();
+ me=data||{role:'buyer',full_name:''};$('#auth').textContent=(me.full_name||'Account').split(' ')[0]});
+async function load(){try{
+ const{data,error}=await SB.from('artworks').select('id,seller_id,title,category,price_usd,type,preview_path').eq('status','approved').order('submitted_at',{ascending:false});
+ if(error)throw error;
+ if(data.length){const{data:s}=await SB.from('public_sellers').select('id,store_name,full_name');const m=Object.fromEntries((s||[]).map(x=>[x.id,x.store_name||x.full_name]));
+  A=data.map(a=>({id:a.id,title:a.title,artist:m[a.seller_id]||'Artist',cat:a.category,type:a.type=='digital'?'Digital':'Physical',price:+a.price_usd,preview:SB.storage.from('previews').getPublicUrl(a.preview_path).data.publicUrl}));
+  CATS=[...new Set(A.map(a=>a.cat))];chips()}
+ }catch(e){console.warn('Could not load artwork',e)}
+ render()}
+chips();
+$('#grid').innerHTML=Array(8).fill('<div class="sk"></div>').join('');
+load();
+</script>
+</body>
+</html>
